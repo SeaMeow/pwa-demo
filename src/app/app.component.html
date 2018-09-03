@@ -1,20 +1,368 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<div class="pagination-container">
+	<span class="pagination-bullets" [ngClass]="{'active': i==0}" *ngFor="let slide of slides;let i=index" (click)="goToSlide(i)"></span>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
 
+<!-- Question Modal -->
+<mz-modal #bottomSheetModal [fixedFooter]="true">
+	<mz-modal-header>
+		<h4>Questions ?</h4>
+	</mz-modal-header>
+	<mz-modal-content>
+		<mz-collection>
+			<mz-collection-item>Collection item 1</mz-collection-item>
+			<mz-collection-item>Collection item 2</mz-collection-item>
+			<mz-collection-item>Collection item 3</mz-collection-item>
+			<mz-collection-item>Collection item 4</mz-collection-item>
+		</mz-collection>
+	</mz-modal-content>
+	<mz-modal-footer>
+		<div class="row">
+			<div class="col s10">
+				<mz-input-container>
+					<input mz-input [validate]="true" [dataError]="'Email is invalid'" [dataSuccess]="'Email is valid'" id="email-input" placeholder="Enter your email"
+					 type="email">
+				</mz-input-container>
+			</div>
+			<div class="col s2">
+				<button mz-button [flat]="true" mz-modal-close>Submit</button>
+			</div>
+		</div>
+
+	</mz-modal-footer>
+</mz-modal>
+
+<!-- Question Button -->
+<button style="position: fixed; bottom: 5%; right: 5%;" class="btn-floating btn-large waves-effect waves-light lime darken-1"
+ (click)="bottomSheetModal.openModal()">
+	<i mz-icon-mdi [align]="'center'" [icon]="'comment-question'">
+	</i>
+</button>
+
+<!-- Slide Contents -->
+<div class="slide-content">
+	<div class="container intro">
+		<div class="intro-content">
+			<div>
+				<img src="assets/imgs/PWA.png" width="40%" data-aos="fade-down">
+				<h4 style="margin: 0 0 0.7em 0; font-weight: 500" data-aos="fade-up">
+					BUILDING BRIDGES TO DESKTOP, MOBILE AND NATIVE
+				</h4>
+				<div class="grey-text" style="font-style: italic; font-size: 1.2em;" data-aos="fade-right" data-aos-delay="500">
+					By Asyraf Norafandi
+				</div>
+			</div>
+		</div>
+		<div class="intro-img hide-on-small-only">
+			<img src="assets/imgs/responsive.png" width="100%" data-aos="fade-left">
+		</div>
+	</div>
+</div>
+<div class="slide-content teal" (click)="nextSlide('intro')" (contextmenu)="previousSlide('intro')">
+	<div class="container">
+		<h4 class="slide-header" data-aos="fade-down">Web Technology Progression</h4>
+		<div data-aos="fade-up">
+			<swiper #introslide>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h5 class="grey-text text-lighten-3">Static Web Pages</h5>
+						<img src="assets/imgs/static-page.png" height="100%" style="max-width: 100%">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h5 class="grey-text text-lighten-3">Dynamic Web Pages</h5>
+						<mz-card class="white" [hoverable]="true">
+							<mz-card-content>
+								<div class="row" style="margin: 2em 0;">
+									<div class="col s2 offset-s1">
+										<i mz-icon-mdi class="teal-text" [icon]="'laptop'" [size]="'48px'"></i>
+										<h5 class="teal-text">Client</h5>
+									</div>
+									<div class="col s2">
+										<i mz-icon-mdi class="teal-text" [icon]="'arrow-left-right-bold-outline'" [size]="'48px'"></i>
+									</div>
+									<div class="col s2">
+										<i mz-icon-mdi class="teal-text" [icon]="'server'" [size]="'48px'"></i>
+										<h5 class="teal-text">Server</h5>
+									</div>
+									<div class="col s2">
+										<i mz-icon-mdi class="teal-text" [icon]="'arrow-left-right-bold-outline'" [size]="'48px'"></i>
+									</div>
+									<div class="col s2">
+										<i mz-icon-mdi class="teal-text" [icon]="'database'" [size]="'48px'"></i>
+										<h5 class="teal-text">Database</h5>
+									</div>
+								</div>
+							</mz-card-content>
+						</mz-card>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h5 class="grey-text text-lighten-3">Server Side Rendering (SSR)</h5>
+						<mz-card class="white" [hoverable]="true">
+							<mz-card-content>
+								<div class="icon-container">
+									<div class="icon-item">
+										<img src="assets/imgs/coldfusion.jpg">
+									</div>
+									<div class="icon-item">
+										<img src="assets/imgs/php.png">
+									</div>
+									<div class="icon-item">
+										<img src="assets/imgs/net.jpg">
+									</div>
+									<div class="icon-item">
+										<img src="assets/imgs/java.png">
+									</div>
+								</div>
+							</mz-card-content>
+						</mz-card>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h5 class="grey-text text-lighten-3">Single Page Application (SPA)</h5>
+						<mz-card class="white" [hoverable]="true">
+							<mz-card-content>
+								<div class="icon-container">
+									<div class="icon-item">
+										<img src="assets/imgs/angular.png">
+									</div>
+									<div class="icon-item">
+										<img src="assets/imgs/ionic.png">
+									</div>
+									<div class="icon-item">
+										<img src="assets/imgs/vue.png">
+									</div>
+									<div class="icon-item">
+										<img src="assets/imgs/react.png">
+									</div>
+								</div>
+							</mz-card-content>
+						</mz-card>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h5 class="grey-text text-lighten-3">PWA Clarification</h5>
+						<mz-collection>
+							<mz-collection-item>
+								<h5>PWA is not a new way to develop web applications</h5>
+							</mz-collection-item>
+							<mz-collection-item>
+								<h5>PWA is not a native app killer</h5>
+							</mz-collection-item>
+							<mz-collection-item>
+								<h5>PWA is not only for Single Page Applications (SPA)</h5>
+							</mz-collection-item>
+						</mz-collection>
+					</div>
+				</div>
+			</swiper>
+		</div>
+	</div>
+</div>
+<div class="slide-content red" (click)="nextSlide('about')" (contextmenu)="previousSlide('about')">
+	<div class="container">
+		<h4 class="slide-header" data-aos="fade-down">What are PWAs ?</h4>
+		<div data-aos="fade-up">
+			<swiper #aboutslide>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/alex.jpg" width=80%>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h4 class="grey-text text-lighten-3">
+							"Responsive, connectivity-independent, app-like, fresh, safe, discoverable, re-engageable, installable, linkable web expereinces."
+						</h4>
+						<div class="grey-text text-lighten-2">
+							- Alex Russel (Google), 2015
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h4 class="grey-text text-lighten-3">
+							"A Progressive Web App (PWA) uses modern web capabilities to deliver an app-like user experience."
+						</h4>
+						<div class="grey-text text-lighten-2">
+							- Google Developers
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/pwa-fire-experience.jpg" width="100%" style="max-width: 100%">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h3 class="grey-text text-lighten-3">
+							"53% of users abandon sites that take longer than 3 seconds to load"
+						</h3>
+						<div class="grey-text text-lighten-2">
+							- Source: DoubleClick - The need for mobile speed: September 2016
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/media-session.PNG" style="max-width: 100%; height: 70vh;">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/dinosaur.gif" width="100%" style="max-width: 100%">
+					</div>
+				</div>
+			</swiper>
+		</div>
+	</div>
+</div>
+<div class="slide-content light-blue" (click)="nextSlide('example')" (contextmenu)="previousSlide('example')">
+	<div class="container">
+		<h4 class="slide-header" data-aos="fade-down">PWA Example</h4>
+		<div data-aos="fade-up">
+			<swiper #exampleslide>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/slide1.jpg" style="max-width: 100%; height: 70vh;">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/slide2.jpg" style="max-width: 100%; height: 70vh;">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/slide3.jpg" style="max-width: 100%; height: 70vh;">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/slide4.jpg" style="max-width: 100%; height: 70vh;">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/slide5.jpg" style="max-width: 100%; height: 70vh;">
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/twitter-lite.PNG" width="100%" style="max-width: 100%;">
+					</div>
+				</div>
+				<div class="left-align">
+					<div class="slide-contents">
+						<h3 class="white-text">65% increase</h3>
+						<h4 class="grey-text text-lighten-3">PAGES PER SESSIONS</h4>
+						<h3 class="white-text">75% increase</h3>
+						<h4 class="grey-text text-lighten-3">IN TWEETS</h4>
+						<h3 class="white-text">1M</h3>
+						<h4 class="grey-text text-lighten-3">DAILY VISITS FROM HOME SCREEN ICON</h4>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<img src="assets/imgs/pwa-users.PNG" width="height%" style="max-width: 100%;">
+					</div>
+				</div>
+			</swiper>
+		</div>
+	</div>
+</div>
+<div class="slide-content deep-purple darken-1" (click)="nextSlide('why')" (contextmenu)="previousSlide('why')">
+	<div class="container">
+		<h4 class="slide-header" data-aos="fade-down">Why should we care ?</h4>
+		<div data-aos="fade-up">
+			<swiper #whyslide>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h3 class="grey-text text-lighten-3">
+							How many native apps an average user downloads in month?
+						</h3>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h2 class="white-text">
+							ZERO
+						</h2>
+						<h3 class="grey-text text-lighten-3">
+							Number of apps that average user intalls per month
+						</h3>
+						<div class="grey-text text-lighten-2">
+							- Source: comScore Mobile Metrix (Custom), U.S., Age 18+, June 2017
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h2 class="white-text">
+							78 %
+						</h2>
+						<h3 class="grey-text text-lighten-3">
+							of time spent is in users' top 3 apps
+						</h3>
+						<div class="grey-text text-lighten-2">
+							- Source: comScore Mobile Metrix (Custom), U.S., Age 18+, June 2017
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h2 class="white-text">
+							3x
+						</h2>
+						<h3 class="grey-text text-lighten-3">
+							more visits to sites then native apps
+						</h3>
+						<div class="grey-text text-lighten-2">
+							- Source: 100 Top Sites vs Native Apps. comScore 2016 report
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h4 class="grey-text text-lighten-3">
+							Improve existing web app performance and user experience
+						</h4>
+						<div class="grey-text text-lighten-2">
+							<img src="assets/imgs/performance.png" width="30%" data-aos="fade-left">
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h3 class="grey-text text-lighten-3">
+							One code, All Platforms
+						</h3>
+						<div class="grey-text text-lighten-2">
+							<img src="assets/imgs/responsive.png" width="50%" data-aos="fade-left">
+						</div>
+					</div>
+				</div>
+				<div class="center-align">
+					<div class="slide-contents">
+						<h3 class="grey-text text-lighten-3">
+							Browser Compatibility
+						</h3>
+						<div class="grey-text text-lighten-2">
+							<img src="assets/imgs/browser.jpg" width="100%" data-aos="fade-left">
+						</div>
+					</div>
+				</div>
+			</swiper>
+		</div>
+	</div>
+</div>
+<div class="slide-content brown darken-1">
+	<div class="container">
+		<h4 class="slide-header" data-aos="fade-down">THANK YOU FOR YOUR ATTENTION!</h4>
+	</div>
+</div>

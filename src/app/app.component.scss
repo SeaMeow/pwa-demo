@@ -1,0 +1,53 @@
+.box {
+    width: 400px;
+    height: 100px;
+    background: red;
+    }
+
+.intro {
+    display: flex;
+}
+
+.intro .intro-content {
+    flex: 1.2;
+    display: flex;
+    align-items: center;
+}
+
+.intro .intro-img {
+    flex: 1;
+}
+
+.icon-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .icon-item {
+        width: 35%;
+        padding: 1em;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 80%;
+        }
+    }
+}
+
+
+@media (min-width: 900px){
+    .icon-container .icon-item {
+        width: 20%;
+    }
+}
+
+::ng-deep .input-field {
+    margin: 0;
+
+}
+
+::ng-deep #email-input {
+    margin: 0;
+}
