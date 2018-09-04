@@ -1,11 +1,32 @@
 import { NgModule } from '@angular/core';
-import { MzCardModule } from 'ngx-materialize';
+// tslint:disable-next-line:max-line-length
+import { MzIconModule, MzIconMdiModule, MzCardModule, MzCollectionModule, MzButtonModule, MzModalModule, MzInputModule, MzTextareaModule, MzSidenavModule, MzToastModule } from 'ngx-materialize';
 @NgModule({
 	imports: [
-		MzCardModule
+		MzCardModule,
+		MzToastModule,
+		MzIconModule,
+		MzIconMdiModule,
+		MzCardModule,
+		MzCollectionModule,
+		MzButtonModule,
+		MzModalModule,
+		MzInputModule,
+		MzTextareaModule,
+		MzSidenavModule,
 	],
 	exports: [
-		MzCardModule
+		MzCardModule,
+		MzToastModule,
+		MzIconModule,
+		MzIconMdiModule,
+		MzCardModule,
+		MzCollectionModule,
+		MzButtonModule,
+		MzModalModule,
+		MzInputModule,
+		MzTextareaModule,
+		MzSidenavModule,
 	]
 })
 export class MaterializeModule { }

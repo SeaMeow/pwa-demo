@@ -2,6 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import AOS from 'aos';
 import { SwiperComponent } from 'ngx-swiper-wrapper';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { QuestionService } from './services/question.service';
+import { MzToastService } from 'ngx-materialize';
+import { Question } from './models/question.interface';
+import { Observable } from 'rxjs';
+import { MessagingService } from './services/messaging.service';
 
 declare var $: any;
 
@@ -11,6 +17,9 @@ declare var $: any;
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+	questionForm: FormGroup;
+	questions: Observable<Question[]>;
 
 	@ViewChild('aboutslide') aboutslide: SwiperComponent;
 	@ViewChild('introslide') introslide: SwiperComponent;
@@ -24,13 +33,32 @@ export class AppComponent implements OnInit {
 		'intro',
 		'about',
 		'example',
-		'why'
+		'why',
+		'thanks'
 	];
 
 	constructor(
+		private fb: FormBuilder,
+		private questionService: QuestionService,
+		private toastService: MzToastService,
+		private msgService: MessagingService
 	) {
+		this.questionForm = this.fb.group({
+			'question': ['', [Validators.required]]
+		});
 	}
+
 	ngOnInit() {
+		this.questions = this.questionService.getAllQuestion();
+
+		this.msgService.getPermission();
+		this.msgService.receiveMessage();
+		this.msgService.currentMessage.subscribe((message) => {
+			if (message) {
+				this.toastService.show(`${message.title} : ${message.body}`, 4000, 'light-blue');
+			}
+		});
+
 		AOS.init({
 			duration: 800,
 			mirror: true,
@@ -42,6 +70,9 @@ export class AppComponent implements OnInit {
 			scrollbars: false,
 			easing: 'easeOutExpo',
 			after: this.slideChanged,
+			afterResize: () => {
+				AOS.refresh();
+			}
 		});
 	}
 
@@ -83,5 +114,15 @@ export class AppComponent implements OnInit {
 
 	goToSlide(index) {
 		$.scrollify.move(index);
+	}
+
+	async submitQuestion() {
+		const quesObj: any = this.questionForm.value;
+		quesObj.timestamp = new Date();
+
+		if (this.questionForm.valid) {
+			await this.questionService.addNewQuestion(quesObj);
+			this.questionForm.reset();
+		}
 	}
 }

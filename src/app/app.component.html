@@ -9,30 +9,34 @@
 	</mz-modal-header>
 	<mz-modal-content>
 		<mz-collection>
-			<mz-collection-item>Collection item 1</mz-collection-item>
-			<mz-collection-item>Collection item 2</mz-collection-item>
-			<mz-collection-item>Collection item 3</mz-collection-item>
-			<mz-collection-item>Collection item 4</mz-collection-item>
+			<mz-collection-item *ngFor="let ques of questions | async">
+				<div>
+					{{ques.question}}
+				</div>
+				<p class="timestamp">
+					{{ques.timestamp.toDate() | date: 'dd/MM/yyyy hh:mm'}}
+				</p>
+			</mz-collection-item>
 		</mz-collection>
 	</mz-modal-content>
 	<mz-modal-footer>
-		<div class="row">
-			<div class="col s10">
-				<mz-input-container>
-					<input mz-input [validate]="true" [dataError]="'Email is invalid'" [dataSuccess]="'Email is valid'" id="email-input" placeholder="Enter your email"
-					 type="email">
-				</mz-input-container>
+		<form [formGroup]="questionForm" (submit)="submitQuestion()">
+			<div class="row" style="margin: 0;">
+				<div class="col s10">
+					<mz-input-container>
+						<input mz-input type="text" placeholder="Submit your question" formControlName="question">
+					</mz-input-container>
+				</div>
+				<div class="col s2">
+					<button mz-button [flat]="true">Submit</button>
+				</div>
 			</div>
-			<div class="col s2">
-				<button mz-button [flat]="true" mz-modal-close>Submit</button>
-			</div>
-		</div>
-
+		</form>
 	</mz-modal-footer>
 </mz-modal>
 
 <!-- Question Button -->
-<button style="position: fixed; bottom: 5%; right: 5%;" class="btn-floating btn-large waves-effect waves-light lime darken-1"
+<button style="position: fixed; bottom: 5%; right: 5%; z-index: 10;" class="btn-floating btn-large waves-effect waves-light lime darken-1"
  (click)="bottomSheetModal.openModal()">
 	<i mz-icon-mdi [align]="'center'" [icon]="'comment-question'">
 	</i>
@@ -364,5 +368,11 @@
 <div class="slide-content brown darken-1">
 	<div class="container">
 		<h4 class="slide-header" data-aos="fade-down">THANK YOU FOR YOUR ATTENTION!</h4>
+		<div>
+			<p class="white-text center-align">
+				<i mz-icon-mdi [align]="'center'" [icon]="'github-box'"></i>
+				https://github.com/SeaMeow/pwa-demo
+			</p>
+		</div>
 	</div>
 </div>
